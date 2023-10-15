@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1;
+  padding: 20px;
+  font-family: Arial;
+}
+
+/* Center website */
+.main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 50px;
+  word-break: break-all;
+  color: #35bdba; /* Text color */
+  
+}
+
+/* Keyframes for the bounceIn animation */
+
+
+.row {
+  margin: 10px -16px;
+}
+
+/* Add padding BETWEEN each column */
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  display: none; /* Hide all elements by default */
+}
+
+/* Clear floats after rows */ 
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content {
+  background-color: white;
+  padding: 10px;
+  height: 250px; /* Adjust this value as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.content img {
+  max-width: 100%;
+  max-height: 80%; /* Adjust this value as needed */
+  object-fit: contain; /* Maintain aspect ratio without stretching */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  background-color: #f1f1f1;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn.active {
+  background-color: #b55c5c;
+  color: rgb(215, 215, 215);
+}
+
+/* Additional button styling */
+#myBtnContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Style for the popup forms */
+.popup-form {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  border-radius: 10px; /* Rounded corners */
+  max-width: 400px; /* Adjust the width as needed */
+}
+
+.popup-content {
+  position: relative;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popup-close:hover {
+  color: #b65f5f;
+}
+
+/* Style for the form inside the popup */
+.popup-form form {
+  margin-top: 20px;
+}
+
+.popup-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.popup-form input,
+.popup-form textarea,
+.popup-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-form button {
+  background-color: #d76464;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.popup-form button.cancel {
+  background-color: #ccc;
+  color: black;
+}
+
+.popup-form button:hover {
+  background-color: #bf4d4d;
+}
+
+
+.popup-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.popup-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.popup-buttons .btn {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #d76464;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.popup-buttons .btn.cancel {
+  background-color: #ccc;
+  color: black;
+}
+
+.popup-buttons .btn:hover {
+  background-color: #bf4d4d;
+}
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+
+
+
+
+.top-left-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.top-left-buttons .btn {
+  background-color: #d76464;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.top-left-buttons .btn:last-child {
+  margin-right: 0;
+}
+
+.top-left-buttons .btn:hover {
+  background-color: #bf4d4d;
+}
+.contact-form {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-form h2 {
+  margin-bottom: 10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<!-- MAIN (Center website) -->
+<div class="main">
+
+<h1>Pet Paradise</h1>
+
+
+<div class="top-left-buttons">
+  <button class="btn" id="purchaseBtn">Purchase</button>
+  <button class="btn" id="contactBtn">Contact</button>
+</div>
+
+<hr>
+
+<h2>"Bringing Pet Dreams to Life, One Paw at a Time!"</h2>
+
+<div id="myBtnContainer">
+  <button class="btn active" onclick="filterSelection('all')">Availables</button>
+  <button class="btn" onclick="filterSelection('nature')">Dogs</button>
+  <button class="btn" onclick="filterSelection('cars')"> Cats</button>
+  <button class="btn" onclick="filterSelection('people')">Birds</button>
+  
+</div>
+
+<!-- Portfolio Gallery Grid -->
+<div class="row">
+  <div class="column nature">
+    <div class="content">
+    
+      <img src="https://i.ytimg.com/vi/Vp7nW2SP6H8/maxresdefault.jpg" alt="Mountains" style="width:100%">
+      <h4>pomeranian</h4>
+      
+    </div>
+  </div>
+  <div class="column nature">
+    <div class="content">
+    <img src="https://www.petitjourney.com.au/wp-content/uploads/2018/03/image3.jpg" alt="Lights" style="width:100%">
+      <h4>Golden retriever</h4>
+      
+    </div>
+  </div>
+  <div class="column nature">
+    <div class="content">
+    <img src="https://www.science.org/do/10.1126/science.abi5787/abs/main_puppies_1280p.jpg" alt="Nature" style="width:100%">
+      <h4>Indian Spitz</h4>
+    
+    </div>
+  </div>
+  
+  <div class="column cars">
+    <div class="content">
+      <img src="https://www.animalssale.com/uploads/520x357/64dbacda1bb29.jpg?v33" alt="Car" style="width:100%">
+      <h4>Persian</h4>
+      
+    </div>
+  </div>
+  <div class="column cars">
+    <div class="content">
+      <img src="https://www.rd.com/wp-content/uploads/2019/05/Ragdoll-Kitten-scaled.jpg?resize=700%2C466" alt="Car" style="width:100%">
+      <h4>Devon Rex</h4>
+      <p>Lorem ipsum dolor..</p>
+    </div>
+  </div>
+  <div class="column cars">
+    <div class="content">
+      <img src="https://w0.peakpx.com/wallpaper/954/309/HD-wallpaper-small-white-kitten-cute-animals-cats-pets.jpg" alt="Car" style="width:100%">
+      <h4>Devon Rex</h4>
+      
+    </div>
+  </div>
+
+  <div class="column people">
+    <div class="content">
+      <img src="https://leafyplace.com/wp-content/uploads/2020/01/post1454.jpg" alt="People" style="width:100%">
+      <h4>Pepper</h4>
+    
+    </div>
+  </div>
+  <div class="column people">
+    <div class="content">
+      <img src="https://www.thesprucepets.com/thmb/x8k0MnX-5MiCJCAVuV3kxnspTOs=/4535x0/filters:no_upscale():strip_icc()/rainbow-lorikeets--trichoglossus-moluccanus--perching-on-branch--paradise-wildlife-park--broxbourne--hertfordshire--england--uk-976978800-d7143424b9484992939a1f51310bb3d6.jpg" alt="People" style="width:100%">
+      <h4>Pikachu</h4>
+      
+    </div>
+  </div>
+  <div class="column people">
+    <div class="content">
+      <img src="https://www.thesprucepets.com/thmb/r23RBk0t4DC9UHp2pTzuXLz7Jj4=/3600x0/filters:no_upscale():strip_icc()/popular-small-bird-species-390926-hero-d3d0af7bb6ed4947b0c3c5afb4784456.jpg" alt="People" style="width:100%">
+      <h4>Skittles</h4>
+      
+    </div>
+  </div>
+<!-- END GRID -->
+</div>
+<div id="purchasePopup" class="popup-form">
+  <h3>Purchase Pet</h3>
+  <form>
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+      <option value="cat">Cat</option>
+      <option value="dog">Dog</option>
+      <option value="bird">Bird</option>
+    </select>
+
+    <label for="breed">Breed Name:</label>
+    <input type="text" id="breed" name="breed">
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price">
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- Contact Popup -->
+<!-- Contact Popup -->
+<div class="popup-form" id="contactPopup">
+  <div class="popup-content contact-form">
+    <span class="popup-close" onclick="closePopup('contactPopup')">&times;</span>
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Name" required>
+      <input type="tel" placeholder="Phone Number" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Address" rows="4" required></textarea>
+      <div class="popup-buttons">
+        <button class="btn" id="submitBtn">Submit</button>
+        <button class="btn cancel" onclick="closePopup('contactPopup')">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<script>
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("column");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
+
+function w3AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+  }
+}
+
+function w3RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+// Show the purchase popup when clicking the purchase button
+document.getElementById("purchaseBtn").addEventListener("click", function() {
+  document.getElementById("purchasePopup").style.display = "block";
+});
+
+/// Show the contact popup when clicking the contact button
+document.getElementById("contactBtn").addEventListener("click", function() {
+  document.getElementById("contactPopup").style.display = "block";
+});
+
+// Hide the contact popup when clicking the close button
+function closePopup(popupId) {
+  document.getElementById(popupId).style.display = "none";
+}
+// Hide the popups when clicking outside the popup
+window.onclick = function(event) {
+  if (event.target == document.getElementById("purchasePopup")) {
+    document.getElementById("purchasePopup").style.display = "none";
+  }
+  if (event.target == document.getElementById("contactBtn")) { // Use the correct ID
+    document.getElementById("contactBtn").style.display = "none"; // Use the correct ID
+  }
+};
+// Hide the popups when clicking outside the popup
+
+
+
+</script>
+
+</body>
+</html>
